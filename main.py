@@ -63,6 +63,11 @@ def handle_search_by_id(cm):
                 print_error("ID no puede estar vacío")
                 continue
             
+            # Validar que sea un número
+            if not client_id.isdigit():
+                print_error("ID debe ser un número entero válido. Intente nuevamente.")
+                continue
+            
             client_id = int(client_id)
             if client_id < 0:
                 print_error("ID debe ser un número positivo")
@@ -94,6 +99,16 @@ def handle_list_by_city(cm):
             city = input("Ingrese el nombre de la ciudad: ").strip()
             if not city:
                 print_error("Ciudad no puede estar vacía")
+                continue
+            
+            # Validar que no sea solo números
+            if city.isdigit():
+                print_error("La ciudad debe ser un nombre, no un número. Intente nuevamente.")
+                continue
+            
+            # Validar que no sea solo caracteres especiales o números
+            if not any(c.isalpha() for c in city):
+                print_error("La ciudad debe contener al menos algunas letras. Intente nuevamente.")
                 continue
             
             clientes = cm.listar_por_ciudad(city)
